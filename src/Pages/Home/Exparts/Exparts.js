@@ -5,6 +5,7 @@ import expart3 from "../../../Images/Expart/expert-3.jpg";
 import expart4 from "../../../Images/Expart/expert-4.jpg";
 import expart5 from "../../../Images/Expart/expert-5.jpg";
 import expart6 from "../../../Images/Expart/expert-6.png";
+import Expart from "../Expart/Expart";
 const exparts = [
   { id: 1, name: "Will smith", img: expart1 },
   { id: 2, name: "Rock jakson", img: expart2 },
@@ -16,7 +17,12 @@ const exparts = [
 const Exparts = () => {
   return (
     <div>
-      <h2>Our Exparts</h2>
+      <h2 className="text-primary text-center fw-bold">Our Experts</h2>
+      <div className="row mx-auto">
+        {exparts.map((expert) => (
+          <Expart key={expert.id} expert={expert}></Expart>
+        ))}
+      </div>
     </div>
   );
 };
