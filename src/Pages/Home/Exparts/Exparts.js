@@ -16,7 +16,7 @@ const exparts = [
 ];
 const Exparts = () => {
   return (
-    <div className="mt-5">
+    <div id="exparts" className="mt-5">
       <h2 className="text-primary text-center fw-bold">Our Experts</h2>
       <div className="row mx-auto">
         {exparts.map((expert) => (

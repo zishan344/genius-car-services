@@ -1,0 +1,11 @@
+.Register-form {
+  width: 50%;
+  margin: 0 auto;
+}
+.form-submit input {
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 4px;
+  margin-bottom: 18px;
+}
