@@ -5,7 +5,10 @@ import {
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import auth from "../../../firebase.init";
+import Looding from "../../Shared/Looding/Looding";
 import Social from "./Social/Social";
 
 const Login = () => {
@@ -20,6 +23,9 @@ const Login = () => {
     useSignInWithEmailAndPassword(auth);
   if (user) {
     navigate(from, { replace: true });
+  }
+  if (loading || sending) {
+    return <Looding></Looding>;
   }
   let element;
   if (error) {
@@ -38,8 +44,12 @@ const Login = () => {
 
   const restPassword = async () => {
     const email = emailRef.current.value;
-    await sendPasswordResetEmail(email);
-    alert("Sent email");
+    if (email) {
+      await sendPasswordResetEmail(email);
+      toast("Sent email");
+    } else {
+      toast("please enter your email Address");
+    }
   };
 
   return (
@@ -76,6 +86,7 @@ const Login = () => {
       </p>
 
       <Social></Social>
+      <ToastContainer />
     </div>
   );
 };

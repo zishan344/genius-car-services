@@ -1,17 +1,21 @@
 import React, { useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import {
-  useAuthState,
   useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import auth from "../../../firebase.init";
+import Looding from "../../Shared/Looding/Looding";
 import Social from "../Login/Social/Social";
 import "./Register.css";
+
 const Register = () => {
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
-  const [user] = useAuthState(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+  const [updateProfile, updating, userProfileError] = useUpdateProfile(auth);
   const [agree, setAgree] = useState(false);
 
   const emailRef = useRef("");
@@ -20,16 +24,22 @@ const Register = () => {
   const navigate = useNavigate();
   if (user) {
     navigate("/");
+    console.log(user);
   }
   const navigateLogin = () => {
     navigate("/login");
   };
-  const formSubmit = (e) => {
+  if (loading || updating) {
+    return <Looding></Looding>;
+  }
+  const formSubmit = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    createUserWithEmailAndPassword(email, password);
+
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName: name });
   };
   return (
     <div className="Register-form">
@@ -61,12 +71,7 @@ const Register = () => {
             name="checkbox"
           />
         </Form.Group>
-        {/* <label
-          htmlFor="checkbox"
-          className={`ps-2 ${agree ? "text-danger" : ""}`}
-        >
-          Accept Genius Car Terms and Conditions
-        </label> */}
+
         <input
           disabled={!agree}
           className="w-50 mx-auto btn-primary"
@@ -80,6 +85,7 @@ const Register = () => {
           Please Login
         </span>
       </p>
+      <ToastContainer />
       <Social></Social>
     </div>
   );

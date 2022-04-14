@@ -7,12 +7,16 @@ import { BsFacebook, BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import auth from "../../../../firebase.init";
+import Looding from "../../../Shared/Looding/Looding";
 
 const Social = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
   const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
   const navigate = useNavigate();
   let element;
+  if (loading || loading1) {
+    return <Looding></Looding>;
+  }
   if (error || error1) {
     element = (
       <div>
