@@ -2,10 +2,12 @@
   width: 50%;
   margin: 0 auto;
 }
-.form-submit input {
+.form-submit input:not([type="checkbox"]) {
   display: block;
   width: 100%;
-  height: 50px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  height: 40px;
   padding: 4px;
   margin-bottom: 18px;
 }
