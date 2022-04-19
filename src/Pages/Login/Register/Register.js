@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import auth from "../../../firebase.init";
 import Looding from "../../Shared/Looding/Looding";
+import PageTitle from "../../Shared/PageTitle/PageTitle";
 import Social from "../Login/Social/Social";
 import "./Register.css";
 
@@ -43,6 +44,8 @@ const Register = () => {
   };
   return (
     <div className="Register-form">
+      <PageTitle title="Register"></PageTitle>
+
       <h2 className="text-primary text-center my-4">Please Register</h2>
       <form onSubmit={formSubmit} className="form-submit">
         <input type="text" placeholder="Your Name" name="name" />
