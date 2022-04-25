@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
@@ -11,7 +12,6 @@ import auth from "../../../firebase.init";
 import Looding from "../../Shared/Looding/Looding";
 import PageTitle from "../../Shared/PageTitle/PageTitle";
 import Social from "./Social/Social";
-
 const Login = () => {
   const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
   const emailRef = useRef("");
@@ -22,9 +22,7 @@ const Login = () => {
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-  if (user) {
-    navigate(from, { replace: true });
-  }
+
   if (loading || sending) {
     return <Looding></Looding>;
   }
@@ -36,11 +34,15 @@ const Login = () => {
       </div>
     );
   }
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    signInWithEmailAndPassword(email, password);
+    await signInWithEmailAndPassword(email, password);
+    const { data } = await axios.post("http://localhost:5000/login", { email });
+    console.log(data);
+    localStorage.setItem("accessToken", data.accessToken);
+    navigate(from, { replace: true });
   };
 
   const restPassword = async () => {
