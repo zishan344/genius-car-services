@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import useServiceDetils from "../../../useServices/useServiceDetils";
 
 const ServiceDetils = () => {
   const { serviceId } = useParams();
-  const [service, setService] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:5000/service/${serviceId}`)
-      .then((res) => res.json())
-      .then((data) => setService(data));
-  }, []);
+  const [service] = useServiceDetils(serviceId);
+
   return (
     <div className="text-center">
       <h2>You are about to book {service.name}</h2>
-      <Link to="/checkout">
+      <Link to={`/checkout/${serviceId}`}>
         <Button variant="primary">Price</Button>
       </Link>
     </div>
