@@ -32,14 +32,16 @@ const Checkout = () => {
       number: e.target.number.value,
       address: e.target.address.value,
     };
-    axios.post("http://localhost:5000/order", order).then((response) => {
-      console.log(response);
-      const { data } = response;
-      if (data.insertedId) {
-        toast("your order is booked");
-        e.target.reset();
-      }
-    });
+    axios
+      .post("https://tranquil-badlands-76544.herokuapp.com/order", order)
+      .then((response) => {
+        console.log(response);
+        const { data } = response;
+        if (data.insertedId) {
+          toast("your order is booked");
+          e.target.reset();
+        }
+      });
   };
   return (
     <div className="w-50 mx-auto">
